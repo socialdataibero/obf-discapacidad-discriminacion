@@ -73,31 +73,6 @@ número de registros **sin expandir**, que es con lo que se juzga si la cifra
 aguanta. El porcentaje se calcula en el navegador, después de agregar, para no
 promediar tasas nunca.
 
-## Trampas de estos microdatos
-
-Están documentadas en el encabezado de cada loader. Las que costaron trabajo
-descubrir:
-
-- **La escala de discapacidad cambia entre ediciones, y en la ENIGH 2024 está
-  invertida.** En 2020 y 2022 el código 1 es "no puede hacerlo"; en 2024 es "sin
-  dificultad". Aplicar el criterio viejo a 2024 da 115 mil personas con
-  discapacidad contra 294 sin ella, e invierte el signo de todos los
-  indicadores. Los loaders declaran la orientación año por año y abortan si la
-  prevalencia resultante cae fuera de un rango plausible.
-- **ENADIS renumeró el cuestionario entre 2017 y 2022**, y hay columnas que
-  existen en ambas ediciones con significados distintos: `p3_18` es alfabetismo
-  en 2022 y parte del bloque laboral en 2017. Por eso los indicadores se piden
-  por concepto (`col(year, "alfabetismo")`) y nunca por nombre de columna.
-- **ENADIS 2017 usa escala binaria y 2022 de severidad.** El criterio de
-  positividad no es intercambiable.
-- **El Censo codifica el sexo como 1/3**, no 1/2.
-- **ENADIS es representativa solo a nivel nacional.** Hay entre 53 y 147 casos
-  por entidad, así que las cifras estatales pasan cualquier umbral de
-  suficiencia y aun así no son válidas. La desagregación está bloqueada en
-  `FUENTES`, no solo desaconsejada.
-- **La ENIGH 2020 no trae el factor de expansión en la tabla de población**: hay
-  que heredarlo de `concentradohogar`.
-
 ## Composición por edad
 
 La discapacidad se concentra en las edades mayores, y eso produce paradojas de
@@ -146,15 +121,3 @@ src/
 ├── metodologia/
 └── index.md
 ```
-
-## Paleta
-
-Los cuatro grupos son dos binarios cruzados (sexo × discapacidad), no cuatro
-categorías independientes, y se codifican como dos tonos por dos intensidades:
-naranja para mujeres, azul para hombres, y la discapacidad como intensidad más
-textura. Cuatro tonos distintos **no pasan** el validador de daltonismo en modo
-oscuro (rojo, naranja y verde colisionan para deuteranopía, ΔE 4.5); dos tonos
-pasan con holgura en ambos modos (ΔE 24.7 y 29.6).
-
-La condición de discapacidad nunca se codifica solo con color: va también en la
-textura de rayas y en la etiqueta de la serie.
