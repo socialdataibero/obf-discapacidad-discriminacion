@@ -1200,6 +1200,9 @@ a.book-cta-primary:focus-visible {
   height: 100%;
   pointer-events: none;
   z-index: 2;
+  /* Atenuado: el titulo y el subtitulo van encima del grafico, y a
+     opacidad plena las barras y las lineas competian con ellos. */
+  opacity: 0.72;
 }
 
 /* La portada dibuja el hallazgo central del tablero: cuatro grupos cuya
