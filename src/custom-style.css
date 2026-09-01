@@ -1181,178 +1181,141 @@ a.book-cta-primary:focus-visible {
 
 /* SVG de flujo */
 /* --------------------------------------------------------------------------
-   ALTURA DE LAS LÍNEAS DE LA PORTADA
-   Un solo número para subirlas o bajarlas. Es un desplazamiento vertical en
-   unidades del viewBox del SVG (0 arriba, 347 abajo), así que:
-
-     10   valor actual, ajustado a ojo sobre la portada real
-     más  las baja; negativo las sube
-
-   Se mueve el grupo entero —las dos curvas, el área y los dos puntos— para
-   que nunca se desalineen entre sí al ajustarlo.
+   ALTURA DEL GRÁFICO DE LA PORTADA
+   Una sola variable mueve el grupo entero —las cuatro barras, la silla y el
+   eje— para que nunca se desalineen entre sí al ajustarlo.
    -------------------------------------------------------------------------- */
 .book-cover-inner {
   --gap-alto: 10;
 }
 
-.book-cover-flow .gap-grupo {
+.book-cover-brecha .brecha-grupo {
   transform: translateY(calc(var(--gap-alto) * 1px));
 }
 
-.book-cover-flow {
+.book-cover-brecha {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
   z-index: 2;
-  opacity: 0.95;
 }
 
-/* La brecha de la portada. En obs-data-book estas clases dibujan líneas de
-   flujo porque el libro trata del flujo de los datos; aquí dibujan las dos
-   trayectorias que se separan, que es el hallazgo central del tablero: la
-   participación laboral de las mujeres sin discapacidad sube con el decil
-   de ingreso y la de las mujeres con discapacidad se queda plana, así que
-   la distancia entre ambas pasa de once a treinta y dos puntos.
+/* La portada dibuja el hallazgo central del tablero: cuatro grupos cuya
+   participación laboral desciende, y en el último —mujeres con discapacidad—
+   una silla de ruedas con el símbolo de mujer sentado en el asiento. La barra
+   se ensancha para alojarla: en una gráfica de barras el ancho no codifica
+   nada, solo el alto lleva el valor, así que ensancharla no falsea el dato y
+   da el espacio que la figura necesita. */
+.book-cover-brecha .brecha-barra {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: brecha-crecer 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
 
-   Se anima una sola vez y se queda, a diferencia del flujo del libro, que
-   corre en bucle: aquí la figura final ES el dato, no una textura. */
-.book-cover-flow .gap-line {
+.book-cover-brecha .brecha-barra-1 {
+  fill: color-mix(in srgb, #ffffff 32%, transparent);
+  animation-delay: 0.2s;
+}
+
+.book-cover-brecha .brecha-barra-2 {
+  fill: color-mix(in srgb, #ffffff 22%, transparent);
+  animation-delay: 0.5s;
+}
+
+.book-cover-brecha .brecha-barra-3 {
+  fill: color-mix(in srgb, var(--brand-red) 46%, transparent);
+  animation-delay: 0.8s;
+}
+
+.book-cover-brecha .brecha-barra-4 {
+  fill: var(--brand-red);
+  animation-delay: 1.1s;
+}
+
+@keyframes brecha-crecer {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* La silla entra cuando las cuatro barras terminaron, para que se lea como
+   consecuencia y no como fondo. */
+.book-cover-brecha .brecha-silla {
+  opacity: 0;
+  animation: brecha-aparecer 1.1s ease-out 1.9s both;
+}
+
+@keyframes brecha-aparecer {
+  to {
+    opacity: 1;
+  }
+}
+
+/* La silla va en la tinta del fondo, troquelada sobre el rojo de la barra; el
+   símbolo de mujer queda en blanco para que no se pierda dentro de ella. */
+.book-cover-brecha .brecha-marco,
+.book-cover-brecha .brecha-aro,
+.book-cover-brecha .brecha-rueda-chica {
   fill: none;
+  stroke: var(--brand-dark);
+  stroke-width: 2.4;
   stroke-linecap: round;
-  stroke-dasharray: 320;
-  stroke-dashoffset: 320;
-  /* Ciclo de 8 segundos: se dibuja, se queda quieta cuatro segundos para
-     poder leerse, se desvanece y vuelve a empezar. Las proporciones viven
-     en el propio keyframe porque una sola animación en bucle es más
-     estable que encadenar varias con delays, que se desincronizan al
-     cambiar de pestaña y volver. */
-  animation: gap-ciclo 8s ease-out 0.3s infinite;
+  stroke-linejoin: round;
 }
 
-.book-cover-flow .gap-line-alta {
-  stroke: color-mix(in srgb, var(--brand-gray) 75%, transparent);
-  stroke-width: 1.6;
+.book-cover-brecha .brecha-marco-fino {
+  stroke-width: 2.1;
 }
 
-.book-cover-flow .gap-line-baja {
-  stroke: var(--brand-red);
-  stroke-width: 2.2;
-  /* El desfase va DENTRO del keyframe y no como animation-delay: con una
-     animación en bucle, un delay deja a esta línea permanentemente
-     atrasada respecto a la gris, y se vería seguir dibujada cuando la otra
-     ya se borró. Aquí las dos empiezan y terminan juntas; lo único que
-     cambia es que la roja tarda un poco más en arrancar su trazo. */
-  animation-name: gap-ciclo-baja;
+.book-cover-brecha .brecha-marco-tenue {
+  stroke-width: 1.8;
 }
 
-@keyframes gap-ciclo-baja {
-  0%,
-  9% {
-    stroke-dashoffset: 320;
-    opacity: 1;
-  }
-  38%,
-  83% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  97%,
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0;
-  }
+.book-cover-brecha .brecha-rueda-chica {
+  stroke-width: 2;
 }
 
-@keyframes gap-ciclo {
-  /* 0-33 % dibuja (2.6s) · 33-83 % quieta (4s) · 83-100 % se borra (1.4s) */
-  0% {
-    stroke-dashoffset: 320;
-    opacity: 1;
-  }
-  33%,
-  83% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  97%,
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0;
+.book-cover-brecha .brecha-buje {
+  fill: none;
+  stroke: var(--brand-dark);
+  stroke-width: 1.4;
+}
+
+.book-cover-brecha .brecha-radio {
+  fill: none;
+  stroke: color-mix(in srgb, var(--brand-dark) 45%, transparent);
+  stroke-width: 1;
+}
+
+.book-cover-brecha .brecha-venus {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+/* La rueda gira despacio, lo justo para que la portada no quede del todo
+   quieta sin distraer de la lectura del título. */
+.book-cover-brecha .brecha-rueda {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: brecha-girar 14s linear infinite;
+}
+
+@keyframes brecha-girar {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* El área entre las dos curvas: la brecha propiamente dicha. Entra después
-   de que ambas terminaron de dibujarse, para que se lea como consecuencia
-   y no como fondo. */
-.book-cover-flow .gap-area {
-  fill: color-mix(in srgb, var(--brand-red) 13%, transparent);
-  opacity: 0;
-  animation: gap-acompana 8s ease-out 0.3s infinite;
-}
-
-/* Cada punto marca el FINAL de su curva, así que aparece cuando ese trazo
-   termina de dibujarse, no en un momento común: la gris cierra en 33 % y la
-   roja en 38 %. Con un solo tiempo para ambos, el punto rojo se encendía
-   antes de que su línea llegara hasta él. */
-.book-cover-flow .gap-punto {
-  opacity: 0;
-}
-
-.book-cover-flow .gap-punto-alta {
-  animation: gap-punto-alta 8s ease-out 0.3s infinite;
-}
-
-.book-cover-flow .gap-punto-baja {
-  animation: gap-punto-baja 8s ease-out 0.3s infinite;
-}
-
-@keyframes gap-punto-alta {
-  0%,
-  31% {
-    opacity: 0;
-  }
-  35%,
-  83% {
-    opacity: 1;
-  }
-  97%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes gap-punto-baja {
-  0%,
-  36% {
-    opacity: 0;
-  }
-  40%,
-  83% {
-    opacity: 1;
-  }
-  97%,
-  100% {
-    opacity: 0;
-  }
-}
-
-/* El área sombreada y los puntos entran cuando las curvas ya casi
-   terminaron de dibujarse, y se van con ellas. */
-@keyframes gap-acompana {
-  0%,
-  28% {
-    opacity: 0;
-  }
-  40%,
-  83% {
-    opacity: 1;
-  }
-  97%,
-  100% {
-    opacity: 0;
-  }
+.book-cover-brecha .brecha-eje {
+  stroke: color-mix(in srgb, #ffffff 24%, transparent);
+  stroke-width: 1.2;
 }
 
 /* La clase va en el propio <img>: el SVG del logo trae id="Capa_1" y clases
@@ -1470,17 +1433,12 @@ img.book-cover-logo {
   .book-cover:hover .book-cover-inner {
     transition: none;
   }
-  .book-cover-flow .gap-line {
-    animation: none !important;
-    stroke-dashoffset: 0 !important;
-  }
-  .book-cover-flow .gap-area,
-  .book-cover-flow .gap-punto {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-  .book-cover-flow .flow-particles {
-    display: none;
+  .book-cover-brecha .brecha-barra,
+  .book-cover-brecha .brecha-silla,
+  .book-cover-brecha .brecha-rueda {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
   .book-cover-accent-shimmer {
     animation: none;

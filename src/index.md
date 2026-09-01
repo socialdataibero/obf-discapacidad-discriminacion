@@ -14,13 +14,31 @@
   <div class="book-cover-inner">
   <div class="book-cover-accent"><span class="book-cover-accent-shimmer"></span></div>
 <div class="book-cover-brillo" aria-hidden="true"></div>
-  <svg class="book-cover-flow" viewBox="0 0 260 347" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-  <g class="gap-grupo">
-  <path class="gap-area" d="M 6 214 C 78 202, 152 176, 254 112 L 254 244 C 152 240, 78 234, 6 230 Z"/>
-  <path class="gap-line gap-line-alta" d="M 6 214 C 78 202, 152 176, 254 112"/>
-  <path class="gap-line gap-line-baja" d="M 6 230 C 78 234, 152 240, 254 244"/>
-  <circle class="gap-punto gap-punto-alta" cx="250" cy="113" r="3" fill="#A7A3A2"/>
-  <circle class="gap-punto gap-punto-baja" cx="250" cy="244" r="3.6" fill="#E30A18"/>
+  <svg class="book-cover-brecha" viewBox="0 0 260 347" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <g class="brecha-grupo">
+  <rect class="brecha-barra brecha-barra-1" x="24" y="96" width="28" height="198"/>
+  <rect class="brecha-barra brecha-barra-2" x="62" y="152" width="28" height="142"/>
+  <rect class="brecha-barra brecha-barra-3" x="100" y="182" width="28" height="112"/>
+  <rect class="brecha-barra brecha-barra-4" x="138" y="202" width="96" height="92"/>
+  <g class="brecha-silla" transform="translate(150,194) scale(1.22)">
+  <g transform="translate(0,15)">
+  <circle class="brecha-venus" cx="29" cy="12" r="8.5"/>
+  <path class="brecha-venus" d="M 29 20.5 L 29 35 M 23 29 L 35 29"/>
+  </g>
+  <g transform="translate(0,-14)">
+  <path class="brecha-marco" d="M 17 68 L 17 54"/>
+  <path class="brecha-marco" d="M 17 68 L 38 68"/>
+  <path class="brecha-marco brecha-marco-fino" d="M 38 68 L 42 78 L 49 78"/>
+  <path class="brecha-marco brecha-marco-tenue" d="M 17 56 L 11 53"/>
+  <g class="brecha-rueda">
+  <circle class="brecha-aro" cx="23" cy="74" r="13"/>
+  <circle class="brecha-buje" cx="23" cy="74" r="3"/>
+  <path class="brecha-radio" d="M 23 61 L 23 87 M 10 74 L 36 74 M 14 65 L 32 83 M 32 65 L 14 83"/>
+  </g>
+  <circle class="brecha-rueda-chica" cx="46" cy="80" r="4.6"/>
+  </g>
+  </g>
+  <line class="brecha-eje" x1="18" y1="294" x2="242" y2="294"/>
   </g>
   </svg>
   <div class="book-cover-text">
