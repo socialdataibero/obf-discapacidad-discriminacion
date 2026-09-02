@@ -26,8 +26,8 @@ export default {
     ".py": ["uv", "run", "python", "-u"],
   },
 
-  // base hardcodeado rompe `npm run dev`; solo aplica en GitHub Actions.
-  base: process.env.GITHUB_ACTIONS ? "/discriminacion-mujeres/" : "/",
+  // base derivado del nombre del repo: sobrevive a un rename. Hardcodearlo rompe npm run dev; solo aplica en GitHub Actions.
+  base: process.env.GITHUB_ACTIONS ? "/" + process.env.GITHUB_REPOSITORY.split("/")[1] + "/" : "/",
 
   // Navegación por ENCUESTA, no por tema. Cada encuesta agrupa sus subtemas,
   // porque una cifra solo es comparable con otra de la misma fuente: los
